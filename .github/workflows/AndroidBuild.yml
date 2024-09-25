@@ -29,7 +29,7 @@ jobs:
           path: app/build/outputs/apk/app-debug.apk
 
       - name: Run Lint
-        run: chmod +x ./gradlew lint
+        run: gradlew lint
 
       - name: Upload html test report
         uses: actions/upload-artifact@v3.1.3
