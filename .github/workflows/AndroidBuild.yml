@@ -27,6 +27,14 @@ jobs:
         with:
           name: Demo-CICD.apk
           path: app/build/outputs/apk/app-debug.apk
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.0
+
+      - name: Build with Gradle
+        run: chmod +x ./gradlew
 
       - name: Run Lint
         run: ./gradlew lint
@@ -37,11 +45,21 @@ jobs:
           name: index.html
           path: app/build/reports/lint-results-debug.html
 
-      - name: Run Test
-        run: ./gradlew test
+  unit-test:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4.1.0
 
-      - name: Upload test report
-        uses: actions/upload-artifact@v3.1.3
-        with:
-          name: unit_test_report
-          path: app/build/reports/tests/testDebugUnitTest/
+        - name: Build with Gradle
+          run: chmod +x ./gradlew
+
+        - name: Run Test
+          run: ./gradlew test
+
+        - name: Upload test report
+          uses: actions/upload-artifact@v3.1.3
+          with:
+            name: unit_test_report
+            path: app/build/reports/tests/testDebugUnitTest/
