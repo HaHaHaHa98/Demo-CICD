@@ -28,6 +28,7 @@ jobs:
           name: Demo-CICD.apk
           path: app/build/outputs/apk/app-debug.apk
   lint:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
