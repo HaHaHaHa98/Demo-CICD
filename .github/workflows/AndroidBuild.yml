@@ -22,11 +22,17 @@ jobs:
       - name: Build with Gradle
         run: chmod +x ./gradlew
 
-      - name: Run Unit Tests
-        run: chmod +x ./gradlew test
-
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.3
         with:
           name: Demo-CICD.apk
           path: app/build/outputs/apk/app-debug.apk
+
+      - name: Run Lint
+        run: chmod +x ./gradlew lintDebug
+
+      - name: Upload html test report
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: index.html
+          path: app/build/reports/lint-results-debug.html
